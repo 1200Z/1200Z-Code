@@ -28,7 +28,8 @@
 #include <API.h>
 #include "chassis.h"
 #include "lift.h"
-#include "base.h"
+#include "claw.h"
+#include "preauton.h"
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
@@ -39,6 +40,15 @@ extern "C" {
 // actual code. If a function does not match a prototype, compile errors will occur.
 
 // Prototypes for initialization, operator control and autonomous
+
+Encoder rightEncoder;
+Encoder leftEncoder;
+Gyro gyro;
+#define right_pot 1
+#define left_pot 2
+#define gyro_port 3
+
+
 
 /**
  * Runs the user autonomous code. This function will be started in its own task with the default
