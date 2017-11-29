@@ -36,5 +36,9 @@ void initializeIO() {
  * will not start. An autonomous mode selection menu like the pre_auton() in other environments
  * can be implemented in this task if desired.
  */
-void initialize() {
+void initialize()
+{
+  Encoder rightEncoder = encoderInit(1,2,false);
+  Encoder leftEncoder = encoderInit(3,4,false);
+  gyro = gyroInit(gyro_port,0);
 }

@@ -11,8 +11,6 @@
  */
 
 #include "main.h"
-#include "chassis.h"
-#include "base.h"
 
 /*
  * Runs the user operator control code. This function will be started in its own task with the
@@ -33,25 +31,27 @@
  */
 void operatorControl()
 {
-	int x,y;
+	int x,y,z;
 	while (1)
 	{
-		y = joystickGetAnalog(1,1);
-		x = joystickGetAnalog(1,2);
+		x = joystickGetAnalog(1,1);
+		y = joystickGetAnalog(1,2);
+		z = joystickGetAnalog(1,3);
 
-		chassisSet(y+x,y-x);
-
-		if(joystickGetDigital(1,6,JOY_UP))
+		if(joystickGetDigital(1,6,JOY_UP))//6U ClOSES
 		{
-			baseSet(127);
+			clawSet(127);
 		}
-		else if(joystickGetDigital(1,6,JOY_DOWN))
+		else if(joystickGetDigital(1,5,JOY_UP))//5U OPENS
 		{
-			baseSet(-127);
+			clawSet(-127);
 		}
 		else
 		{
-			baseSet(0);
+			clawSet(8);//Holding speeds
 		}
+
+		chassisSet(y+x,y-x);
+		if(abs(z) > 5) liftSet(z);
 	}
 }
