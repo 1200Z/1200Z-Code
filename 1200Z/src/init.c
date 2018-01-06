@@ -38,7 +38,7 @@ void initializeIO() {
  */
 void initialize()
 {
-  Encoder rightEncoder = encoderInit(1,2,false);
-  Encoder leftEncoder = encoderInit(3,4,false);
+  rightEncoder = encoderInit(1,2,false);
+  leftEncoder = encoderInit(3,4,true);
   gyro = gyroInit(gyro_port,0);
 }

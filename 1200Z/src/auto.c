@@ -25,5 +25,39 @@
  * The autonomous task may exit, unlike operatorControl() which should never exit. If it does
  * so, the robot will await a switch to another mode or disable/enable cycle.
  */
-void autonomous() {
+void proSkills()
+{
+  chassisSet(-127,-127);
+  delay(5000);
+  chassisSet(0,0);
+  delay(2000);
+  chassisSet(45,90);
+  delay(4000);
+  chassisSet(0,0);
+}
+
+void juicer()
+{
+  clawDrive(-127, 250);
+  robotFunction(Forward, 70, 350);
+  clawSet(90);
+  delay(500);
+  robotFunction(Backward,70,385);
+  delay(300);
+  clawDrive(-127,400);
+}
+
+void stationWagon()
+{
+  clawSet(30);
+  liftDrive(80,950);
+  robotFunction(Forward,55,125);
+  liftDrive(60,800);
+  clawDrive(-127,500);
+  robotFunction(Backward,70,50);
+}
+
+void autonomous()
+{
+  stationWagon();
 }

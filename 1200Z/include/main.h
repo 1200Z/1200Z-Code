@@ -48,7 +48,12 @@ Gyro gyro;
 #define left_pot 2
 #define gyro_port 3
 
+#define Forward 101
+#define Backward 102
+#define LeftPoint 103
+#define RightPoint 104
 
+void driverControl();
 
 /**
  * Runs the user autonomous code. This function will be started in its own task with the default

@@ -1,17 +1,23 @@
+//this includes "main.h"
 #include "main.h"
 
-
-const int Forward = 1;
-const int Backward = 2;
-const int LeftPoint = 3;
-const int RightPoint = 4;
 
 bool isLessThan(int num1, int num2)
 {
   return num1<num2;
 }
 
-/*void robotFunction(int chassisDirection, int chassisSpeed, int distance)
+int sign(int num)
+{
+  return abs(num)/num;
+}
+
+int encoderValue()
+{
+  return abs(encoderGet(leftEncoder))/2+abs(encoderGet(rightEncoder))/2;
+}
+
+void robotFunction(int chassisDirection, int chassisSpeed, int distance)
 {
   encoderReset(rightEncoder);
   encoderReset(leftEncoder);
@@ -40,10 +46,11 @@ bool isLessThan(int num1, int num2)
       rightSpeed = 0;
   }
 
-  while(isLessThan(abs(encoderGet(rightEncoder)),distance))
+  while(encoderValue()<distance)
   {
     chassisSet(leftSpeed, rightSpeed);
+    delay(1);
   }
   chassisSet(0,0);
+  delay(5);
 }
-*/

@@ -29,14 +29,24 @@
  *
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
-void operatorControl()
+void driverControl()
 {
 	int x,y,z;
+	int leftSpeed, rightSpeed;
 	while (1)
 	{
 		x = joystickGetAnalog(1,1);
 		y = joystickGetAnalog(1,2);
 		z = joystickGetAnalog(1,3);
+
+		leftSpeed = y+x;
+		rightSpeed = y-x;
+
+		if(sign(leftSpeed) != sign(rightSpeed))
+		{
+			leftSpeed = leftSpeed*0.7;
+			rightSpeed = rightSpeed*0.7;
+		}
 
 		if(joystickGetDigital(1,6,JOY_UP))//6U ClOSES
 		{
@@ -51,7 +61,26 @@ void operatorControl()
 			clawSet(8);//Holding speeds
 		}
 
-		chassisSet(y+x,y-x);
+		chassisSet(leftSpeed, rightSpeed);
 		if(abs(z) > 5) liftSet(z);
 	}
+}
+
+void operatorControl()
+{
+	driverControl();
+	/*int leftPot,rightPot,potValue;
+
+	while(1)
+	{
+		leftPot = analogRead(left_pot);
+		rightPot = analogRead(right_pot);
+		potValue = (analogRead(left_pot) + analogRead(right_pot))/2;
+
+
+		printf("%d ",leftPot);
+		printf("%d ",rightPot);
+		printf("%d\n",potValue);
+		delay(100);
+	}*/
 }
