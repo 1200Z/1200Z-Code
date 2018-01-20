@@ -1,11 +1,5 @@
-//this includes "main.h"
 #include "main.h"
-
-
-bool isLessThan(int num1, int num2)
-{
-  return num1<num2;
-}
+//Functions declared in preauton.h
 
 int sign(int num)
 {
@@ -17,11 +11,18 @@ int encoderValue()
   return abs(encoderGet(leftEncoder))/2+abs(encoderGet(rightEncoder))/2;
 }
 
-void robotFunction(int chassisDirection, int chassisSpeed, int distance)
+int potValue()
+{
+  return (analogRead(left_pot)+analogRead(right_pot))/2;
+}
+
+void robotFunction(int chassisDirection, int chassisSpeed, int distance, int liftSpeed, int height)
 {
   encoderReset(rightEncoder);
   encoderReset(leftEncoder);
   int leftSpeed, rightSpeed;
+  bool keepGoing = true;
+  bool keepChassisGoing, keepLiftGoing;
 
   switch(chassisDirection)
   {
@@ -46,11 +47,28 @@ void robotFunction(int chassisDirection, int chassisSpeed, int distance)
       rightSpeed = 0;
   }
 
-  while(encoderValue()<distance)
+  while(keepGoing)
   {
-    chassisSet(leftSpeed, rightSpeed);
-    delay(1);
+    keepChassisGoing = encoderValue()<distance;
+
+    if(height != 0)
+    {
+      keepLiftGoing = abs(height - potValue()) > 7;
+    }
+    else keepLiftGoing = false;
+
+    if(keepChassisGoing)
+    {
+      chassisSet(leftSpeed, rightSpeed);
+    }
+
+    if(keepLiftGoing)
+    {
+      liftSet(sign(height - potValue())*liftSpeed);
+    }
+
+    keepGoing = keepChassisGoing || keepLiftGoing;
+    delay(20);
   }
   chassisSet(0,0);
-  delay(5);
 }

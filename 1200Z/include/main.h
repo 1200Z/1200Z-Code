@@ -28,7 +28,8 @@
 #include <API.h>
 #include "chassis.h"
 #include "lift.h"
-#include "claw.h"
+#include "base.h"
+#include "intake.h"
 #include "preauton.h"
 
 // Allow usage of this file in C++ programs
@@ -41,18 +42,41 @@ extern "C" {
 
 // Prototypes for initialization, operator control and autonomous
 
+//Initial definitions of motors by their ports
+#define bld_motor 2
+#define fld_motor 9
+#define brd_motor 8
+#define frd_motor 3
+#define ll_motor 4
+#define rl_motor 7
+#define base_motor 1
+#define lfb_motor 5
+#define rfb_motor 6
+#define int_motor 10
+
+//Declare sensor names
 Encoder rightEncoder;
 Encoder leftEncoder;
 Gyro gyro;
+
+//Define analog sensors by their ports
 #define right_pot 1
 #define left_pot 2
 #define gyro_port 3
+#define auton_select 4
 
+//Define constants for chassisDirection parameter in robotFunction
 #define Forward 101
 #define Backward 102
 #define LeftPoint 103
 #define RightPoint 104
 
+//Define four-bar and lift holding values (default speed)
+#define WristHold 0
+#define LiftHold 0
+#define RollerHold 0
+
+//Runs user operator control function
 void driverControl();
 
 /**
@@ -115,6 +139,6 @@ void operatorControl();
 // End C++ export structure
 #ifdef __cplusplus
 }
-#endif
+#endif//_cplusplus
 
-#endif
+#endif//_MAIN_H_

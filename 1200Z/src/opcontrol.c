@@ -11,6 +11,7 @@
  */
 
 #include "main.h"
+//Functions declared in main.h
 
 /*
  * Runs the user operator control code. This function will be started in its own task with the
@@ -31,13 +32,15 @@
  */
 void driverControl()
 {
-	int x,y,z;
-	int leftSpeed, rightSpeed;
+	//Variable declarations for joystick controls
+	int x,y,z,w;
+	int leftSpeed, rightSpeed, rollerSpeed, baseSpeed;
 	while (1)
 	{
 		x = joystickGetAnalog(1,1);
 		y = joystickGetAnalog(1,2);
-		z = joystickGetAnalog(1,3);
+		z = joystickGetAnalog(2,3);
+		w = joystickGetAnalog(2,2);
 
 		leftSpeed = y+x;
 		rightSpeed = y-x;
@@ -48,21 +51,38 @@ void driverControl()
 			rightSpeed = rightSpeed*0.7;
 		}
 
-		if(joystickGetDigital(1,6,JOY_UP))//6U ClOSES
+		if(joystickGetDigital(2,6,JOY_UP))
 		{
-			clawSet(127);
+			rollerSpeed = -127;
 		}
-		else if(joystickGetDigital(1,5,JOY_UP))//5U OPENS
+		else if(joystickGetDigital(2,6,JOY_DOWN))
 		{
-			clawSet(-127);
+			rollerSpeed = 127;
 		}
 		else
 		{
-			clawSet(8);//Holding speeds
+			rollerSpeed = RollerHold;
 		}
 
+		if(joystickGetDigital(1,5,JOY_UP))
+		{
+			baseSpeed = 127;
+		}
+		else if(joystickGetDigital(1,5,JOY_DOWN))
+		{
+			baseSpeed = -127;
+		}
+		else baseSpeed = 0;
+
 		chassisSet(leftSpeed, rightSpeed);
+		rollerSet(rollerSpeed);
+		baseSet(baseSpeed);
+
+		if(abs(w) > 5) wristSet(w);
+		else wristSet(WristHold);
+
 		if(abs(z) > 5) liftSet(z);
+		else liftSet(LiftHold);
 	}
 }
 
