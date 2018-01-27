@@ -28,24 +28,95 @@ void proSkills()
 //Start algined backwards, aiming just in front of opponent colored tile
 void leftDefense()
 {
-  robotFunction(Backward,127,1200,0,0);
-  delay(1000);
-  robotFunction(LeftPoint,60,200,0,0);
-  baseDrive(127,800);
-  robotFunction(Forward,70,500,0,0);
-  baseDrive(-127,800);
+  rollerSet(RollerHold);
+  chassisSet(-127,-127);
+  delay(3500);
+  chassisSet(0,0);
+  delay(3000);
+  chassisSet(-127,-127);
+  delay(2000);
+  chassisSet(0,0);
 }
 
 void rightDefense()
 {
-  robotFunction(Backward,127,1200,0,0);
-  delay(1000);
-  robotFunction(RightPoint,60,200,0,0);
-  baseDrive(127,800);
-  robotFunction(Forward,70,500,0,0);
-  baseDrive(-127,800);
+  rollerSet(RollerHold);
+  chassisSet(-127,-127);
+  delay(3500);
+  chassisSet(0,0);
+  delay(3000);
+  chassisSet(-127,-127);
+  delay(2000);
+  chassisSet(0,0);
 }
 
+void rightMogoTen()
+{
+  liftSet(80);
+  delay(300);
+  liftSet(0);
+  robotFunction(Forward,50,1450,0,0,127,1700);
+  delay(100);
+  baseSet(-127);
+  delay(1100);
+  robotFunction(Backward,80,1350,0,0,-127,400);
+  delay(200);
+  robotFunction(RightPoint,70,450,0,0,0,0);
+  robotFunction(0,0,0,0,0,127,1600);
+  delay(200);
+  robotFunction(Backward,127,150,0,0,0,0);
+}
+
+void leftMogoTen()
+{
+  liftSet(80);
+  delay(300);
+  liftSet(0);
+  robotFunction(Forward,50,1450,0,0,127,1700);
+  delay(100);
+  baseSet(-127);
+  delay(1100);
+  robotFunction(Backward,80,1350,0,0,-127,400);
+  delay(200);
+  robotFunction(LeftPoint,70,450,0,0,0,0);
+  robotFunction(0,0,0,0,0,127,1600);
+  delay(200);
+  robotFunction(Backward,127,150,0,0,0,0);
+}
+
+void leftMogoFive()
+{
+  liftSet(80);
+  delay(300);
+  liftSet(0);
+  robotFunction(Forward,50,1450,0,0,127,1700);
+  delay(100);
+  baseSet(-127);
+  delay(1100);
+  robotFunction(Backward,80,1000,0,0,-127,400);
+  delay(200);
+  robotFunction(LeftPoint,70,450,0,0,0,0);
+  robotFunction(0,0,0,0,0,127,1600);
+  delay(200);
+  robotFunction(Backward,127,150,0,0,0,0);
+}
+
+void rightMogoFive()
+{
+  liftSet(80);
+  delay(300);
+  liftSet(0);
+  robotFunction(Forward,50,1450,0,0,127,1700);
+  delay(100);
+  baseSet(-127);
+  delay(1100);
+  robotFunction(Backward,80,1000,0,0,-127,400);
+  delay(200);
+  robotFunction(RightPoint,70,450,0,0,0,0);
+  robotFunction(0,0,0,0,0,127,1600);
+  delay(200);
+  robotFunction(Backward,127,150,0,0,0,0);
+}
 /*
 * Runs the user autonomous code. This function will be started in its own task with the default
 * priority and stack size whenever the robot is enabled via the Field Management System or the
@@ -62,5 +133,18 @@ void rightDefense()
 */
 void autonomous()
 {
+  while(1)//Select auton by potentiometer values
+  {
+    if(analogRead(auton_select) <= 800)
+      leftMogoTen();
+    else if(analogRead(auton_select) > 800 && analogRead(auton_select) <= 1600)
+      leftMogoFive();
+    else if(analogRead(auton_select) > 1600 && analogRead(auton_select) <= 2400)
+      leftDefense();
+    else if(analogRead(auton_select) > 2400 && analogRead(auton_select) <= 3200)
+      rightMogoFive();
+    else if(analogRead(auton_select) > 3200)
+      rightMogoTen();
 
+  }
 }

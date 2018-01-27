@@ -44,8 +44,8 @@ extern "C" {
 
 //Initial definitions of motors by their ports
 #define bld_motor 2
-#define fld_motor 9
-#define brd_motor 8
+#define fld_motor 8
+#define brd_motor 9
 #define frd_motor 3
 #define ll_motor 4
 #define rl_motor 7
@@ -60,10 +60,13 @@ Encoder leftEncoder;
 Gyro gyro;
 
 //Define analog sensors by their ports
-#define right_pot 1
-#define left_pot 2
+#define lift_pot 1
 #define gyro_port 3
 #define auton_select 4
+#define wrist_pot 5
+
+//Define digital sensors by their ports
+#define base_switch 5
 
 //Define constants for chassisDirection parameter in robotFunction
 #define Forward 101
@@ -74,7 +77,7 @@ Gyro gyro;
 //Define four-bar and lift holding values (default speed)
 #define WristHold 0
 #define LiftHold 0
-#define RollerHold 0
+#define RollerHold -30
 
 //Runs user operator control function
 void driverControl();

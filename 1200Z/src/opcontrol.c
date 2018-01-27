@@ -33,14 +33,15 @@
 void driverControl()
 {
 	//Variable declarations for joystick controls
-	int x,y,z,w;
-	int leftSpeed, rightSpeed, rollerSpeed, baseSpeed;
+	int x,y,z,w,v;
+	int leftSpeed, rightSpeed, rollerSpeed, wristSpeed;
 	while (1)
 	{
-		x = joystickGetAnalog(1,1);
-		y = joystickGetAnalog(1,2);
-		z = joystickGetAnalog(2,3);
-		w = joystickGetAnalog(2,2);
+		x = joystickGetAnalog(1,1);//Right x-axis
+		y = joystickGetAnalog(1,2);//Right y-axis
+		z = joystickGetAnalog(2,3);//Partner left y-axis
+		w = joystickGetAnalog(2,2);//Partner right y-axis
+		v = joystickGetAnalog(1,3);//Left y-axis
 
 		leftSpeed = y+x;
 		rightSpeed = y-x;
@@ -64,22 +65,21 @@ void driverControl()
 			rollerSpeed = RollerHold;
 		}
 
-		if(joystickGetDigital(1,5,JOY_UP))
+		if(abs(w) > 5)
 		{
-			baseSpeed = 127;
+			wristSpeed = -w;
 		}
-		else if(joystickGetDigital(1,5,JOY_DOWN))
+		else wristSpeed = WristHold;
+
+		if(analogRead(wrist_pot) < wristThreshold() &&  wristSpeed < 0)
 		{
-			baseSpeed = -127;
+			wristSpeed = 0;
 		}
-		else baseSpeed = 0;
 
 		chassisSet(leftSpeed, rightSpeed);
 		rollerSet(rollerSpeed);
-		baseSet(baseSpeed);
-
-		if(abs(w) > 5) wristSet(w);
-		else wristSet(WristHold);
+		baseSet(v);
+		//wristSet(wristSpeed);
 
 		if(abs(z) > 5) liftSet(z);
 		else liftSet(LiftHold);
@@ -88,19 +88,18 @@ void driverControl()
 
 void operatorControl()
 {
+	taskCreate(wristControl,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 	driverControl();
-	/*int leftPot,rightPot,potValue;
+	/*int liftPot, wristPot, wrist;
 
 	while(1)
 	{
-		leftPot = analogRead(left_pot);
-		rightPot = analogRead(right_pot);
-		potValue = (analogRead(left_pot) + analogRead(right_pot))/2;
-
-
-		printf("%d ",leftPot);
-		printf("%d ",rightPot);
-		printf("%d\n",potValue);
-		delay(100);
-	}*/
+		liftPot = analogRead(lift_pot);
+		wrist = analogRead(wrist_pot);
+		wristPot = wristThreshold();
+		printf("%d ",liftPot);
+		printf("%d ", wrist);
+		printf("%d\n", wristPot);
+		delay(20);
+	} */
 }
