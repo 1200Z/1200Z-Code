@@ -30,11 +30,7 @@ void leftDefense()
 {
   rollerSet(RollerHold);
   chassisSet(-127,-127);
-  delay(3500);
-  chassisSet(0,0);
   delay(3000);
-  chassisSet(-127,-127);
-  delay(2000);
   chassisSet(0,0);
 }
 
@@ -53,9 +49,9 @@ void rightDefense()
 void rightMogoTen()
 {
   liftSet(80);
-  delay(300);
+  delay(400);
   liftSet(0);
-  robotFunction(Forward,50,1450,0,0,127,1700);
+  robotFunction(Forward,50,1450,0,0,127,1900);
   delay(100);
   baseSet(-127);
   delay(1100);
@@ -70,9 +66,9 @@ void rightMogoTen()
 void leftMogoTen()
 {
   liftSet(80);
-  delay(300);
+  delay(400);
   liftSet(0);
-  robotFunction(Forward,50,1450,0,0,127,1700);
+  robotFunction(Forward,50,1450,0,0,127,1900);
   delay(100);
   baseSet(-127);
   delay(1100);
@@ -87,9 +83,9 @@ void leftMogoTen()
 void leftMogoFive()
 {
   liftSet(80);
-  delay(300);
+  delay(400);
   liftSet(0);
-  robotFunction(Forward,50,1450,0,0,127,1700);
+  robotFunction(Forward,50,1450,0,0,127,1900);
   delay(100);
   baseSet(-127);
   delay(1100);
@@ -104,9 +100,9 @@ void leftMogoFive()
 void rightMogoFive()
 {
   liftSet(80);
-  delay(300);
+  delay(400);
   liftSet(0);
-  robotFunction(Forward,50,1450,0,0,127,1700);
+  robotFunction(Forward,50,1450,0,0,127,1900);
   delay(100);
   baseSet(-127);
   delay(1100);
@@ -133,8 +129,6 @@ void rightMogoFive()
 */
 void autonomous()
 {
-  while(1)//Select auton by potentiometer values
-  {
     if(analogRead(auton_select) <= 800)
       leftMogoTen();
     else if(analogRead(auton_select) > 800 && analogRead(auton_select) <= 1600)
@@ -145,6 +139,4 @@ void autonomous()
       rightMogoFive();
     else if(analogRead(auton_select) > 3200)
       rightMogoTen();
-
-  }
 }

@@ -60,9 +60,9 @@ Encoder leftEncoder;
 Gyro gyro;
 
 //Define analog sensors by their ports
-#define lift_pot 1
+#define lift_pot 4
 #define gyro_port 3
-#define auton_select 4
+#define auton_select 1
 #define wrist_pot 5
 
 //Define digital sensors by their ports
